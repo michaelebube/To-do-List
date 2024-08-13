@@ -182,7 +182,7 @@ const filteredGroupedTodoList = filteredDate
 
         {/* Clear Button */}
         <div>
-          <button onClick={clearBtn} className={`absolute bottom-4 left-[40%] text-[16px] bg-rose-400 rounded-full px-4 py-[6px] text-white ${todoList.length === 0 ? 'hidden' : 'block'}`}>Clear All</button>
+          <button onClick={clearBtn} className={`sticky bottom-4 left-[40%] text-[16px] bg-rose-400 rounded-full px-4 py-[6px] text-white ${todoList.length === 0 ? 'hidden' : 'block'}`}>Clear All</button>
         </div>
 
         {/* Edit Popup */}
