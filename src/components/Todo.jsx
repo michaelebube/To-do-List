@@ -3,6 +3,9 @@ import todoIcon from '../assets/todo_icon.png';
 import TodoItems from './TodoItems';
 import DatePopUp from './DatePopUp';
 
+import DateFilterPopup from './DateFilterPopup';
+
+
 const Todo = () => {
   const [todoList, setTodoList] = useState(localStorage.getItem('task') ? JSON.parse(localStorage.getItem('task')) : []);
   const [isEditing, setIsEditing] = useState(false);
@@ -10,6 +13,7 @@ const Todo = () => {
   const [newText, setNewText] = useState('');
   const [selectedDate, setSelectedDate] = useState(null); // Track selected date
   const [showAddButton, setShowAddButton] = useState(false); // Track Add button visibility
+  const [filteredDate, setFilteredDate] =  useState(null)
 
   const inputRef = useRef();
 
@@ -84,15 +88,49 @@ const Todo = () => {
     closeEditPopup();
   };
 
+  const groupedTodoList = todoList.reduce((acc, task) => {
+    const taskDate = new Date(task.date).toDateString();
+    if (!acc[taskDate]) {
+      acc[taskDate] = [];
+    }
+    acc[taskDate].push(task);
+    return acc;
+  }, {});
+
+  const sortedDates = Object.keys(groupedTodoList).sort((a, b) => new Date(a) - new Date(b));
+
+  // Filtered todo list based on the selected date
+const filteredGroupedTodoList = filteredDate
+    ? Object.keys(groupedTodoList)
+        .filter(date => new Date(date).toDateString() === new Date(filteredDate).toDateString())
+        .reduce((acc, date) => {
+          acc[date] = groupedTodoList[date];
+          return acc;
+        }, {})
+    : groupedTodoList;
+ 
+
+
+
   return (
     <>
-      <div className='bg-white place-self-center w-11/12 max-w-md flex flex-col px-7 py-4 min-h-[550px] rounded-xl relative'>
+      <div className='bg-backColor place-self-center w-11/12 max-w-lg flex flex-col px-9 py-4 h-[550px] rounded-xl relative overflow-y-auto overflow-x-hidden'>
 
         {/* Title */}
-        <div className='flex items-center mt-5 gap-[6px]'>
+        <div className='flex justify-between items-center  w-[600px] relative mt-5 '>
+          <div className='flex items-center  gap-[6px]'>
           <img src={todoIcon} alt="" style={{ width: 25, height: 25 }} />
           <h1 className='text-[26px] font-semibold'>TaskFlow</h1>
+        </div >
+          <DateFilterPopup
+            filteredDate={filteredDate}
+            setFilteredDate={setFilteredDate}
+          />
+        <div>
+
         </div>
+        </div>
+        
 
         {/* Input */}
         
@@ -121,12 +159,26 @@ const Todo = () => {
             />
         </div>
 
-        {/* Todo List */}
-        <div>
-          {todoList.map((item, index) => {
-            return <TodoItems key={index} text={item.text} id={item.id} isComplete={item.isComplete} deleteTask={deleteTask} toggle={toggle} openEditPopup={() => openEditPopup(item.id, item.text)} />;
-          })}
+          {/* Todo List */}
+               <div>
+          {Object.keys(filteredGroupedTodoList).map(date => (
+            <div key={date} className="mt-4">
+              <h2 className="font-semibold text-[15px]">{date}</h2>
+              {filteredGroupedTodoList[date].map((item) => (
+                <TodoItems
+                  key={item.id}
+                  text={item.text}
+                  id={item.id}
+                  isComplete={item.isComplete}
+                  deleteTask={deleteTask}
+                  toggle={toggle}
+                  openEditPopup={() => openEditPopup(item.id, item.text)}
+                />
+              ))}
+            </div>
+          ))}
         </div>
+  
 
         {/* Clear Button */}
         <div>

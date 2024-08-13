@@ -8,8 +8,8 @@ const TodoItems = ({text, id, isComplete, deleteTask, toggle, openEditPopup}) =>
   return (
     <div className='flex items-center my-3 gap-2 justify-between'>
         <div onClick={() => {toggle(id)}} className='flex flex-1 items-center cursor-pointer '>
-            <img src={isComplete ? tick: not_tick} alt="" className='w-7' />
-            <p className='text-slate-700 ml-4 text-[17px]' style={{textDecoration: isComplete ? 'line-through' : 'none', textDecorationColor: isComplete ? 'slategray' : 'none'}}>{text}</p>
+            <img src={isComplete ? tick: not_tick} alt="" className='w-5' />
+            <p className='text-slate-700 ml-4 text-[14px]' style={{textDecoration: isComplete ? 'line-through' : 'none', textDecorationColor: isComplete ? 'slategray' : 'none'}}>{text}</p>
         </div>
 
         <div className='flex gap-2 items-center'>

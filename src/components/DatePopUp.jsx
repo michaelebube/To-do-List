@@ -1,26 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { FaCaretDown } from 'react-icons/fa';
 
 const DatePopUp = ({ selectedDate, setSelectedDate, setShowAddButton }) => {
   const [showCalendar, setShowCalendar] = useState(false);
+    const calendarRef = useRef(null);
+
 
   const toggleCalendar = () => {
     setShowCalendar(!showCalendar);
     if (showCalendar) {
-      setShowAddButton(false); // Hide Add button when calendar is opened again
+      setShowAddButton(false); 
     }
   };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    setShowCalendar(false);
-    setShowAddButton(true); // Show Add button after date selection
+   
+    setShowAddButton(true); 
   };
 
+  const handleClickOutside = (event) => {
+    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+      setShowCalendar(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="relative ">
+    <div ref={calendarRef} className="relative ">
         <div className='flex items-center '>
             <button
         onClick={toggleCalendar}
@@ -34,9 +49,9 @@ const DatePopUp = ({ selectedDate, setSelectedDate, setShowAddButton }) => {
       
 
       {showCalendar && (
-        <div className="absolute mt-1 z-10 shadow-lg p-4">
+        <div className="absolute mt-1 z-10 shadow-lg p-2">
           <Calendar
-            className='w-[300px] xs:-translate-x-44 sm:-translate-x-10'
+            className='w-[300px] '
             onChange={handleDateChange}
             value={selectedDate}
             minDate={new Date()}

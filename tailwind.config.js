@@ -9,7 +9,7 @@ export default {
         xs: '450px'
       },
       colors: {
-        backColor: '#EDE8D0',
+        backColor: '#FAF9F6',
         eleColor: '#DC0000'
       }
     },
