@@ -97,7 +97,7 @@ const Todo = () => {
     return acc;
   }, {});
 
-  const sortedDates = Object.keys(groupedTodoList).sort((a, b) => new Date(b) - new Date(a));
+  const sortedDates = Object.keys(groupedTodoList).sort((a, b) => new Date(a) - new Date(b));
 
   // Filtered todo list based on the selected date
 const filteredGroupedTodoList = filteredDate
@@ -117,7 +117,8 @@ const filteredGroupedTodoList = filteredDate
       <div className='bg-backColor place-self-center w-11/12 max-w-lg flex flex-col px-9 py-4 h-[550px] rounded-xl relative overflow-y-auto overflow-x-hidden'>
 
         {/* Title */}
-        <div className='flex justify-between items-center  w-[600px] relative mt-5 '>
+        <div className='sticky top-0 z-10 bg-backColor'>
+           <div className=' relative flex justify-between items-center  w-[590px] mt-5 '>
           <div className='flex items-center  gap-[6px]'>
           <img src={todoIcon} alt="" style={{ width: 25, height: 25 }} />
           <h1 className='text-[26px] font-semibold'>TaskFlow</h1>
@@ -158,13 +159,15 @@ const filteredGroupedTodoList = filteredDate
             setShowAddButton={setShowAddButton}
             />
         </div>
+        </div>
+       
 
           {/* Todo List */}
-               <div>
-          {Object.keys(filteredGroupedTodoList).map(date => (
+              <div className='mb-5 '>
+          {sortedDates.map(date => (
             <div key={date} className="mt-4">
               <h2 className="font-semibold text-[15px]">{date}</h2>
-              {filteredGroupedTodoList[date].map((item) => (
+              {filteredGroupedTodoList[date] && filteredGroupedTodoList[date].map((item) => (
                 <TodoItems
                   key={item.id}
                   text={item.text}
@@ -181,8 +184,10 @@ const filteredGroupedTodoList = filteredDate
   
 
         {/* Clear Button */}
-        <div>
-          <button onClick={clearBtn} className={`sticky bottom-4 left-[40%] text-[16px] bg-rose-400 rounded-full px-4 py-[6px] text-white ${todoList.length === 0 ? 'hidden' : 'block'}`}>Clear All</button>
+         <div className='fixed bottom-8 left-1/2 transform -translate-x-1/2 rounded-full z-20'>
+          <button onClick={clearBtn} className={`text-[16px] bg-rose-400 rounded-full px-4 py-[6px] text-white ${todoList.length === 0 ? 'hidden' : 'block'}`}>
+            Clear All
+          </button>
         </div>
 
         {/* Edit Popup */}

@@ -39,7 +39,7 @@ const DateFilterPopup = ({filteredDate, setFilteredDate}) => {
 
   return (
     <>
-    <div ref={calendarRef} className='absolute right-[175px]'>
+    <div ref={calendarRef} className='absolute right-[160px]'>
         <div>
              <FaSlidersH style={{width: '25', height: '20'}} onClick={toggleFilterCalendar}  />
         </div>
