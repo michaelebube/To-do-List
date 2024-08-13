@@ -97,7 +97,7 @@ const Todo = () => {
     return acc;
   }, {});
 
-  const sortedDates = Object.keys(groupedTodoList).sort((a, b) => new Date(a) - new Date(b));
+  const sortedDates = Object.keys(groupedTodoList).sort((a, b) => new Date(b) - new Date(a));
 
   // Filtered todo list based on the selected date
 const filteredGroupedTodoList = filteredDate
