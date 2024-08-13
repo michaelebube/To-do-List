@@ -27,7 +27,7 @@ const DatePopUp = ({ selectedDate, setSelectedDate, setShowAddButton }) => {
         className="px-3 py-1 w-1/2  bg-transparent text-black  text-sm font-medium cursor-pointer flex items-center justify-between border rounded-xl mb-1"
       >
         {selectedDate ? selectedDate.toDateString() : 'Select Date' }
-        <FaCaretDown className=''/>
+        <FaCaretDown />
       </button>
      
         </div>
