@@ -14,7 +14,7 @@ const TodoItems = ({text, id, isComplete, deleteTask, toggle, openEditPopup}) =>
 
         <div className='flex gap-4 items-center'>
             <FaPencilAlt onClick={() => openEditPopup(id, text)}  className='text-slate-500 cursor-pointer' />
-            <img src={deleteIcon} className='w-4' alt="" onClick={() => {deleteTask(id)}} />
+            <img src={deleteIcon} className='w-4 cursor-pointer' alt="" onClick={() => {deleteTask(id)}} />
         </div>
 
     </div>
